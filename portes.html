@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portes - Poyraz Paris</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #c8a45a;
+  --primary-dark: #a8883a;
+  --bg-dark: #0a0a0f;
+  --bg-card: rgba(255,255,255,0.03);
+  --text: #e8e6e3;
+  --text-muted: #8a8a8a;
+  --border: rgba(255,255,255,0.06);
+  --gold-glow: rgba(200,164,90,0.15);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+  animation: pageFadeIn 0.5s ease;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(125deg, rgba(10,10,15,1) 0%, rgba(20,18,25,1) 100%);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.3;
+  background-image:
+    linear-gradient(45deg, var(--border) 1px, transparent 1px),
+    linear-gradient(-45deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: -1;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: rgba(200,164,90,0.06);
+  top: -200px; right: -200px;
+  animation: floatOrb 20s ease-in-out infinite;
+}
+.orb-2 {
+  width: 500px; height: 500px;
+  background: rgba(100,80,140,0.05);
+  bottom: -150px; left: -150px;
+  animation: floatOrb 25s ease-in-out infinite reverse;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(50px, -50px); }
+  66% { transform: translate(-30px, 30px); }
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 0.8rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.logo img { display: block; height: 40px; width: auto; background: #fff; padding: 6px 12px; border-radius: 8px; }
+
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+  text-transform: uppercase;
+}
+.nav-links a:hover { color: var(--primary); }
+.nav-links a.active { color: var(--primary); }
+
+.nav-toggle {
+  display: none;
+  font-size: 1.5rem;
+  color: var(--text);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+section { padding: 6rem 2rem; }
+
+.page-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+.section-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+.page-header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 1rem;
+}
+.page-header p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #0a0a0f;
+  box-shadow: 0 4px 20px var(--gold-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--gold-glow);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.gallery-item {
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  transition: all 0.4s;
+}
+.gallery-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(200,164,90,0.25);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+}
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+.gallery-item:hover img {
+  transform: scale(1.08);
+}
+.gallery-item .overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.5rem 1rem 0.8rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.gallery-item:hover .overlay {
+  opacity: 1;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.lightbox.active {
+  display: flex;
+}
+.lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  font-size: 2rem;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  z-index: 2001;
+}
+.lightbox-close:hover {
+  opacity: 1;
+}
+
+footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 0; right: -100%;
+    width: 280px; height: 100vh;
+    background: rgba(10,10,15,0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 6rem 2rem 2rem;
+    gap: 1.5rem;
+    transition: right 0.4s;
+    border-left: 1px solid var(--border);
+  }
+  .nav-links.open { right: 0; }
+  .nav-toggle { display: block; }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+  section { padding: 4rem 1.2rem; }
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav id="navbar">
+  <a href="index.html" class="logo">
+    <img src="https://poyraz-paris.fr/wp-content/uploads/2024/10/logo-poyraz-paris.png" alt="Poyraz Paris">
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <i class="fas fa-bars"></i>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#accueil">Accueil</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="references.html">Réalisations</a></li>
+    <li><a href="portes.html" class="active">Portes</a></li>
+    <li><a href="index.html#engagement">Engagement</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section style="padding-top:8rem;">
+  <div class="page-header fade-up">
+    <div class="section-tag">Catalogue</div>
+    <h1>Nos Modèles de Portes</h1>
+    <p>Découvrez notre sélection de portes en bois, aluminium et PVC. Cliquez sur une image pour l'agrandir.</p>
+  </div>
+
+  <div class="gallery-grid" id="gallery"></div>
+
+  <div style="text-align:center;margin-top:2.5rem;" class="fade-up">
+    <p style="color:var(--text-muted);font-size:1rem;margin-bottom:1.5rem;">
+      Vous ne trouvez pas le modèle idéal ? <span style="color:var(--primary);font-weight:600;">Contactez-nous</span> pour une création sur mesure.
+    </p>
+    <a href="index.html#contact" class="btn btn-primary">Demander un Devis <i class="fas fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+  <img id="lightboxImg" src="" alt="Porte agrandie">
+</div>
+
+<footer>
+  <p>&copy; 2026 Poyraz Paris. Tous droits réservés. &mdash; 3 Allée des Champs, 95270 Belloy-en-France</p>
+</footer>
+
+<script>
+const doorImages = [
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-06.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-07.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-08.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-12.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-13.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-14.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-15.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-16.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-17.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-18.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-19.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-20.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-21.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-22.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-23.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-24.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-25.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-26.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-27.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-29.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-30.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-31.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-32.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-33.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-34.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-35.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-36.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-37.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-38.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-39.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-40.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-41.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-42.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-43.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-44.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-45.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-47.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-48.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-49.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-50.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-51.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-52.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-53.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-55.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-56.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-57.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-58.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-59.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-60.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-61.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-62.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-64.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-65.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-66.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-67.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-68.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-69.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-70.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-71.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-72.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-73.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-74.jpg',
+  'https://poyraz-paris.fr/wp-content/uploads/2024/11/catalogue-porte-bois-GERVAIS-75.jpg'
+];
+
+const gallery = document.getElementById('gallery');
+
+doorImages.forEach((src, index) => {
+  const item = document.createElement('div');
+  item.className = 'gallery-item fade-up';
+  item.innerHTML = '<img src="' + src + '" alt="Porte modèle ' + (index + 1) + '" loading="lazy"><span class="overlay">Porte modèle ' + (index + 1) + '</span>';
+  item.addEventListener('click', () => openLightbox(src));
+  gallery.appendChild(item);
+});
+
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxClose = document.getElementById('lightboxClose');
+
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  const icon = navToggle.querySelector('i');
+  icon.className = navLinks.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.querySelector('i').className = 'fas fa-bars';
+  });
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

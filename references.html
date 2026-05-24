@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réalisations - Poyraz Paris</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #c8a45a;
+  --primary-dark: #a8883a;
+  --bg-dark: #0a0a0f;
+  --bg-card: rgba(255,255,255,0.03);
+  --text: #e8e6e3;
+  --text-muted: #8a8a8a;
+  --border: rgba(255,255,255,0.06);
+  --gold-glow: rgba(200,164,90,0.15);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+  animation: pageFadeIn 0.5s ease;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(125deg, rgba(10,10,15,1) 0%, rgba(20,18,25,1) 100%);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.3;
+  background-image:
+    linear-gradient(45deg, var(--border) 1px, transparent 1px),
+    linear-gradient(-45deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: -1;
+}
+.orb-1 {
+  width: 600px; height: 600px;
+  background: rgba(200,164,90,0.06);
+  top: -200px; right: -200px;
+  animation: floatOrb 20s ease-in-out infinite;
+}
+.orb-2 {
+  width: 500px; height: 500px;
+  background: rgba(100,80,140,0.05);
+  bottom: -150px; left: -150px;
+  animation: floatOrb 25s ease-in-out infinite reverse;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(50px, -50px); }
+  66% { transform: translate(-30px, 30px); }
+}
+
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s;
+  background: transparent;
+}
+nav.scrolled {
+  background: rgba(10,10,15,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0.8rem 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.logo img { display: block; height: 40px; width: auto; background: #fff; padding: 6px 12px; border-radius: 8px; }
+
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+  text-transform: uppercase;
+}
+.nav-links a:hover { color: var(--primary); }
+.nav-links a.active { color: var(--primary); }
+
+.nav-toggle {
+  display: none;
+  font-size: 1.5rem;
+  color: var(--text);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+section { padding: 6rem 2rem; }
+
+.section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+.section-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+.section-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-bottom: 1rem;
+}
+.section-header p {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.ref-project {
+  max-width: 1200px;
+  margin: 0 auto 2.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  transition: all 0.4s;
+}
+.ref-project:hover {
+  border-color: rgba(200,164,90,0.2);
+}
+
+.ref-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.ref-item {
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: all 0.3s;
+}
+.ref-item:hover {
+  border-color: var(--primary);
+  transform: scale(1.02);
+}
+.ref-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* CTA */
+.cta-section {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+.cta-section p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #0a0a0f;
+  box-shadow: 0 4px 20px var(--gold-glow);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--gold-glow);
+}
+
+footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 0; right: -100%;
+    width: 280px; height: 100vh;
+    background: rgba(10,10,15,0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    padding: 6rem 2rem 2rem;
+    gap: 1.5rem;
+    transition: right 0.4s;
+    border-left: 1px solid var(--border);
+  }
+  .nav-links.open { right: 0; }
+  .nav-toggle { display: block; }
+
+  section { padding: 4rem 1.2rem; }
+  .ref-project { padding: 1.5rem; }
+  .ref-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .ref-item img { height: 150px; }
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.lightbox.active {
+  display: flex;
+}
+.lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  font-size: 2rem;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  z-index: 2001;
+}
+.lightbox-close:hover {
+  opacity: 1;
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav id="navbar">
+  <a href="index.html" class="logo">
+    <img src="https://poyraz-paris.fr/wp-content/uploads/2024/10/logo-poyraz-paris.png" alt="Poyraz Paris">
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <i class="fas fa-bars"></i>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#accueil">Accueil</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="references.html" class="active">Réalisations</a></li>
+    <li><a href="portes.html">Portes</a></li>
+    <li><a href="index.html#engagement">Engagement</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="references" style="padding-top:8rem;">
+  <div class="section-header fade-up">
+    <div class="section-tag">Notre Portfolio</div>
+    <h2>Références & Réalisations</h2>
+    <p>Découvrez nos projets récents : vérandas, fenêtres, garde-corps, portes et pergolas sur mesure réalisés pour nos clients.</p>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Véranda sur mesure pour un café</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/563907102_17895826680339092_6369689553958255016_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/563907102_17895826680339092_6369689553958255016_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/565765375_17895826677339092_27808430834588463_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/565765375_17895826677339092_27808430834588463_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/567073885_17895826656339092_3912310654728882887_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/567073885_17895826656339092_3912310654728882887_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/563888893_17895826674339092_5777541506405967731_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/563888893_17895826674339092_5777541506405967731_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/565506923_17895826653339092_8046904940986747954_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/565506923_17895826653339092_8046904940986747954_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Pose de garde-corps et de fenêtres sur mesure</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/567188061_17896718049339092_2956061961124962275_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/567188061_17896718049339092_2956061961124962275_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/569358682_17896718067339092_4147298064753112105_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/569358682_17896718067339092_4147298064753112105_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/568539049_17896718064339092_7592353112783034271_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/568539049_17896718064339092_7592353112783034271_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Pose fenêtres en aluminium blanc, avec baguettes intégrées</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/571285876_17897073444339092_2261905849678846967_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/571285876_17897073444339092_2261905849678846967_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/565388189_17897073435339092_4783024398956759594_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/565388189_17897073435339092_4783024398956759594_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/570495714_17897073426339092_8749703049809130465_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/570495714_17897073426339092_8749703049809130465_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/569207710_17897073414339092_6476325877123710764_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/569207710_17897073414339092_6476325877123710764_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/569026178_17897073417339092_5731420590487869166_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/569026178_17897073417339092_5731420590487869166_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Plus de 130 fenêtres en aluminium noir posées</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/573319686_17897991942339092_6805857279878755454_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/573319686_17897991942339092_6805857279878755454_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/573731131_17897991945339092_7403859853131131811_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/573731131_17897991945339092_7403859853131131811_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/571759509_17897991927339092_8418958658066266793_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/571759509_17897991927339092_8418958658066266793_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/571191262_17897991900339092_3820020756884876866_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/571191262_17897991900339092_3820020756884876866_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/573057752_17897991915339092_3740060176113023602_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/573057752_17897991915339092_3740060176113023602_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/573819470_17897991918339092_1731309405440298236_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/573819470_17897991918339092_1731309405440298236_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Vitrine de magasins sur mesure (avant/après)</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-magasins-428605582_913222066938792_5654668111346993657_n-1.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-magasins-428605582_913222066938792_5654668111346993657_n-1-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-magasins-392884054_913222070272125_548838998748593954_n-1.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-magasins-392884054_913222070272125_548838998748593954_n-1-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-magasins-428606474_913222073605458_5414718193663122048_n-1.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-magasins-428606474_913222073605458_5414718193663122048_n-1-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Vitrine de magasins sur mesure</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-restaurant-321780890_616361316915646_4335121692770699357_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-restaurant-321780890_616361316915646_4335121692770699357_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-restaurant-322553935_5685506468243185_7257358149195332184_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-restaurant-322553935_5685506468243185_7257358149195332184_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Une pergola sur mesure qui allie esthétisme, confort et durabilité</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/559044302_1314291093498552_2043967721739070659_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/559044302_1314291093498552_2043967721739070659_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/557744367_1314291486831846_5150405308738149608_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/557744367_1314291486831846_5150405308738149608_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/558507412_1314291230165205_4538413583589376036_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/558507412_1314291230165205_4538413583589376036_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Une pergola blanche, élégante et intemporelle</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/12/564002400_17895616554339092_7125179185757210139_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/12/564002400_17895616554339092_7125179185757210139_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Nos réalisations récentes</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/521652981_122133292304827033_7298480745925374676_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/521652981_122133292304827033_7298480745925374676_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/520348638_122133292364827033_393154203288987450_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/520348638_122133292364827033_393154203288987450_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/520636272_122133292190827033_2809008986376742110_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/520636272_122133292190827033_2809008986376742110_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/521208907_122133292148827033_35522954820705489_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/521208907_122133292148827033_35522954820705489_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/521871922_122133292154827033_6806963567051938609_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/521871922_122133292154827033_6806963567051938609_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/522199316_122133292334827033_6142061141526341230_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/522199316_122133292334827033_6142061141526341230_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Véranda de pavillon sur jardin</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/539572141_122139381368827033_2820375612781668918_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/539572141_122139381368827033_2820375612781668918_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/539095509_122139381506827033_4759629529414503355_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/539095509_122139381506827033_4759629529414503355_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/539603980_122139381428827033_1942944363346570757_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/539603980_122139381428827033_1942944363346570757_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Véranda géante</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/539033089_122139384770827033_8661783103741402984_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/539033089_122139384770827033_8661783103741402984_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/539234535_122139384692827033_7154707513034700425_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/539234535_122139384692827033_7154707513034700425_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Garde corps de pavillon</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/539622522_122139383744827033_4611181113182747401_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/539622522_122139383744827033_4611181113182747401_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/539359031_122139383672827033_6389267519999790480_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/539359031_122139383672827033_6389267519999790480_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/539312593_122139383510827033_7869324072664900228_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/539312593_122139383510827033_7869324072664900228_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Véranda géante pour bureaux tabac</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/542760140_122140665974827033_334995263186067241_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/542760140_122140665974827033_334995263186067241_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/541812928_122140666124827033_1397131626780425561_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/541812928_122140666124827033_1397131626780425561_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/542756104_122140666052827033_6304902769085032604_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/542756104_122140666052827033_6304902769085032604_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Pergola d'entrée</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/540374897_122139556076827033_2458998055269913366_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/540374897_122139556076827033_2458998055269913366_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/09/540965462_122139556166827033_6823374415245644639_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/09/540965462_122139556166827033_6823374415245644639_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Garde Corps en verre</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/475686285_10226442980917895_5009842394854242143_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/475686285_10226442980917895_5009842394854242143_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/475830105_10226442981277904_6847657515054230685_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/475830105_10226442981277904_6847657515054230685_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/475865746_10226442981837918_5842767223119460719_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/475865746_10226442981837918_5842767223119460719_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/475562675_10226442982157926_22735001680669757_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/475562675_10226442982157926_22735001680669757_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/475511171_10226442982517935_4019076809489557608_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/475511171_10226442982517935_4019076809489557608_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Garde corps escalier en verre</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/481261601_1148428350084828_1203332889116418114_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/481261601_1148428350084828_1203332889116418114_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/482003841_1148427126751617_1165572115876582714_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/482003841_1148427126751617_1165572115876582714_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/482010532_1148425966751733_7157377668811972373_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/482010532_1148425966751733_7157377668811972373_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/481025087_1148429263418070_7564740084814441883_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/481025087_1148429263418070_7564740084814441883_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Sas d'entrée</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/41249b69-e1af-45bd-90c9-b4f13d821235.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/41249b69-e1af-45bd-90c9-b4f13d821235-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/1f80e172-ab8f-4e02-942a-9d40d7f9fa87.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/1f80e172-ab8f-4e02-942a-9d40d7f9fa87-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/d6fceb2f-1672-44d7-b25d-9417207584a0.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/d6fceb2f-1672-44d7-b25d-9417207584a0-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/26539d5b-d103-4b42-b4b9-7744a53e146d.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/26539d5b-d103-4b42-b4b9-7744a53e146d-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Garde corps balcon fer forgé</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/5996ae79-497d-4171-8643-57ccae0d03dc.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/5996ae79-497d-4171-8643-57ccae0d03dc-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/71c1566d-b9aa-4956-abf2-501d6185ce75.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/71c1566d-b9aa-4956-abf2-501d6185ce75-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/21fc0276-5d05-4a87-a879-f15b416f80b3.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/21fc0276-5d05-4a87-a879-f15b416f80b3-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2025/07/1bab31e6-4bab-4805-8560-5c7b44b79a30.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2025/07/1bab31e6-4bab-4805-8560-5c7b44b79a30-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Portes et fenêtres d'usines</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/461518818_1045160657078265_5350390868780958725_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/461518818_1045160657078265_5350390868780958725_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/461616973_1045160670411597_2549851958423154522_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/461616973_1045160670411597_2549851958423154522_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/461699555_1045160837078247_2711840846496641319_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/461699555_1045160837078247_2711840846496641319_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">SAS d'entrée</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/avant-sas-d-entree-428353475_912365787024420_4922096632886122264_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/avant-sas-d-entree-428353475_912365787024420_4922096632886122264_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/apres-sas-d-entree428452763_912365793691086_9189044019935088147_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/apres-sas-d-entree428452763_912365793691086_9189044019935088147_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Baie vitrée coulissante et fenêtres</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/baie-vitree-coulissante-et-fenetre-de-maison-392776432_913213700272962_9197792700239657404_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/baie-vitree-coulissante-et-fenetre-de-maison-392776432_913213700272962_9197792700239657404_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/baie-vitree-coulissante-et-fenetre-de-maison-428604575_913213720272960_6170126504321858143_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/baie-vitree-coulissante-et-fenetre-de-maison-428604575_913213720272960_6170126504321858143_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/baie-vitree-coulissante-et-fenetre-de-maison-428607518_913213710272961_7276415623220990965_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/baie-vitree-coulissante-et-fenetre-de-maison-428607518_913213710272961_7276415623220990965_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Portes et fenêtres de bâtiment</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/batiment-448790656_982326483361683_2763777434986933691_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/batiment-448790656_982326483361683_2763777434986933691_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/batiment-2-436001449_938587857735546_7151393253778920706_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/batiment-2-436001449_938587857735546_7151393253778920706_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/batiment-448787394_982326480028350_4768874618777247_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/batiment-448787394_982326480028350_4768874618777247_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Portes et fenêtres de bâtiments</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/portes-et-fenetres-de-batiments-428605796_913229413604724_6272275601975958453_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/portes-et-fenetres-de-batiments-428605796_913229413604724_6272275601975958453_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/portes-et-fenetres-de-batiments-428605752_913229423604723_6899276998508867393_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/portes-et-fenetres-de-batiments-428605752_913229423604723_6899276998508867393_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Pergola automatique sur mesure</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-automatique-448826203_982317350029263_2988361183149729938_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-automatique-448826203_982317350029263_2988361183149729938_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-automatique-448811735_982317356695929_5420036555651537743_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-automatique-448811735_982317356695929_5420036555651537743_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Pergola fixe sur mesure</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-fixe-281854228_528987155362287_4042103010683693641_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-fixe-281854228_528987155362287_4042103010683693641_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-fixe-280755545_528987175362285_5500618079766435728_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-fixe-280755545_528987175362285_5500618079766435728_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-fixe-281278986_528987325362270_8928343850343829532_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/pergola-fixe-281278986_528987325362270_8928343850343829532_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Porte d'entrée sur mesure</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-295929327_573966004197735_5559002939598753423_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-295929327_573966004197735_5559002939598753423_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-428329921_909999100594422_9021321485336780252_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-428329921_909999100594422_9021321485336780252_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-428608104_913221486938850_9109672197258027529_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-428608104_913221486938850_9109672197258027529_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Porte d'entrée (avant/après)</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-avant-A-290763321_554958739431795_6898285274904022301_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-avant-A-290763321_554958739431795_6898285274904022301_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-apres-A-289010986_554958872765115_5386421555171126413_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/porte-d-entree-apres-A-289010986_554958872765115_5386421555171126413_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Véranda sur mesure</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/veranda-323093412_1261108778082288_6055208619482222613_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/veranda-323093412_1261108778082288_6055208619482222613_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/veranda-323438367_3520297078198441_8791060554460613872_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/veranda-323438367_3520297078198441_8791060554460613872_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/veranda-324889765_688217259626923_2475931786348200604_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/veranda-324889765_688217259626923_2475931786348200604_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Garde-corps vitré intérieur</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/garde-corps-448751151_982321256695539_4962453747405938247_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/garde-corps-448751151_982321256695539_4962453747405938247_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/garde-corps-448787143_982321250028873_8188066680909206191_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/garde-corps-448787143_982321250028873_8188066680909206191_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/garde-corps-448790242_982321263362205_5299688350635466307_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/garde-corps-448790242_982321263362205_5299688350635466307_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="ref-project fade-up">
+    <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:1rem;color:var(--primary);">Vitrine de café sur mesure (avant/après)</h3>
+    <div class="ref-grid">
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-de-cafe-avant-B-279132761_513849046876098_7436813014428907360_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-de-cafe-avant-B-279132761_513849046876098_7436813014428907360_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-de-cafe-apres-les-travaux-B-279103666_513849263542743_2390948165423357530_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-de-cafe-apres-les-travaux-B-279103666_513849263542743_2390948165423357530_n-400x300.jpg" alt="" loading="lazy"></a>
+      <a href="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-de-cafe-apres-les-travaux-2-B-279047179_513849280209408_506967562142436589_n.jpg" class="ref-item" target="_blank"><img src="https://poyraz-paris.fr/wp-content/uploads/2024/11/vitrine-de-cafe-apres-les-travaux-2-B-279047179_513849280209408_506967562142436589_n-400x300.jpg" alt="" loading="lazy"></a>
+    </div>
+  </div>
+
+  <div class="fade-up" style="max-width:700px;margin:0 auto;padding:4rem 2rem;text-align:center;background:var(--bg-card);border:1px solid var(--border);border-radius:20px;">
+    <p style="font-size:1.1rem;color:var(--text-muted);margin-bottom:2rem;line-height:1.8;">N'hésitez pas à nous contacter pour un devis gratuit au +33 6 49 55 48 82</p>
+    <a href="index.html#contact" class="btn btn-primary">Demander un Devis <i class="fas fa-arrow-right"></i></a>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+  <img id="lightboxImg" src="" alt="Image agrandie">
+</div>
+
+<footer>
+  <p>&copy; 2026 Poyraz Paris. Tous droits réservés. &mdash; 3 Allée des Champs, 95270 Belloy-en-France</p>
+</footer>
+
+<script>
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  const icon = navToggle.querySelector('i');
+  icon.className = navLinks.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.querySelector('i').className = 'fas fa-bars';
+  });
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Lightbox
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxClose = document.getElementById('lightboxClose');
+
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+// Convert ref-item links to lightbox
+document.querySelectorAll('.ref-item').forEach(el => {
+  el.removeAttribute('target');
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    openLightbox(el.getAttribute('href'));
+  });
+});
+</script>
+</body>
+</html>
