@@ -277,6 +277,52 @@ footer {
   to { opacity: 1; transform: translateY(0); }
 }
 
+.progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+  z-index: 9999;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #0a0a0f;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: all 0.3s;
+  z-index: 999;
+  box-shadow: 0 4px 20px var(--gold-glow);
+}
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.back-to-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px var(--gold-glow);
+}
+
+@media (max-width: 768px) {
+  .back-to-top { bottom: 1rem; right: 1rem; width: 40px; height: 40px; font-size: 1rem; }
+}
+
 /* Lightbox */
 .lightbox {
   position: fixed;
@@ -318,6 +364,7 @@ footer {
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
@@ -636,6 +683,8 @@ footer {
   <p>&copy; 2026 Poyraz Paris. Tous droits réservés. &mdash; 3 Allée des Champs, 95270 Belloy-en-France</p>
 </footer>
 
+<button class="back-to-top" id="backToTop" aria-label="Retour en haut"><i class="fas fa-arrow-up"></i></button>
+
 <script>
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -664,6 +713,22 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Progress bar & Back to top
+const progressBar = document.getElementById('progressBar');
+const backToTop = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = progress + '%';
+  backToTop.classList.toggle('visible', scrollTop > 300);
+});
+
+backToTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 
 // Lightbox
 const lightbox = document.getElementById('lightbox');
