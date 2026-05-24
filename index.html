@@ -6,6 +6,7 @@
 <title>Poyraz Paris - Portes & Fenêtres sur Mesure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -950,9 +951,11 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-// Star rating
+// Star rating (1 oy = 1 kisi)
 const stars = document.querySelectorAll('.star');
+const ratingMsg = document.querySelector('.rating-message');
 let currentRating = parseInt(localStorage.getItem('poyrazRating')) || 0;
+let hasRated = localStorage.getItem('poyrazHasRated') === 'true';
 
 function updateStars(rating) {
   stars.forEach(s => {
@@ -962,6 +965,10 @@ function updateStars(rating) {
 }
 
 function showRatingMessage(rating) {
+  if (hasRated) {
+    ratingMsg.textContent = 'Vous avez déjà donné votre avis. Merci ! (' + rating + '/5)';
+    return;
+  }
   const msgs = {
     1: 'Merci pour votre avis. Nous allons nous améliorer !',
     2: 'Merci. Nous ferons mieux la prochaine fois.',
@@ -969,19 +976,12 @@ function showRatingMessage(rating) {
     4: 'Merci ! Nous sommes ravis que vous appréciez.',
     5: 'Merci infiniment ! Votre satisfaction est notre priorité.'
   };
-  document.querySelector('.rating-message').textContent = msgs[rating] || '';
-}
-
-function updateAverage() {
-  const ratings = JSON.parse(localStorage.getItem('poyrazRatings') || '[]');
-  if (ratings.length > 0) {
-    const avg = (ratings.reduce((a,b) => a + b, 0) / ratings.length).toFixed(1);
-    document.querySelector('.rating-average').textContent = 'Note moyenne : ' + avg + ' / 5 (' + ratings.length + ' avis)';
-  }
+  ratingMsg.textContent = msgs[rating] || '';
 }
 
 stars.forEach(star => {
   star.addEventListener('mouseenter', () => {
+    if (hasRated) return;
     const val = parseInt(star.dataset.value);
     updateStars(val);
   });
@@ -989,19 +989,18 @@ stars.forEach(star => {
     updateStars(currentRating);
   });
   star.addEventListener('click', () => {
+    if (hasRated) return;
     currentRating = parseInt(star.dataset.value);
     localStorage.setItem('poyrazRating', currentRating);
-    const ratings = JSON.parse(localStorage.getItem('poyrazRatings') || '[]');
-    ratings.push(currentRating);
-    localStorage.setItem('poyrazRatings', JSON.stringify(ratings));
+    localStorage.setItem('poyrazHasRated', 'true');
+    hasRated = true;
     updateStars(currentRating);
     showRatingMessage(currentRating);
-    updateAverage();
   });
 });
 
 updateStars(currentRating);
-updateAverage();
+if (currentRating > 0) showRatingMessage(currentRating);
 </script>
 </body>
 </html>
